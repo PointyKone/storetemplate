@@ -1,0 +1,15 @@
+.navTransitionProfile {
+    transition: all ease-out 100ms;
+    transition: all ease-in 75ms;
+}
+
+.navTransitionProfileInactive {
+    opacity: 0;
+    visibility: hidden;
+    scale: 95;
+}
+
+.navTransitionProfileActive {
+    opacity: 1;
+    scale: 100;
+}
