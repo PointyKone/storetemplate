@@ -8,8 +8,12 @@ const Login: NextPage = () => {
     const [password, setPassword] = useState<string>('')
 
     const login = () => {
-        const res = trpc.useQuery(["login", {username, password}])
-        console.log(res);
+        const res = trpc.useQuery(["login", { username, password }])
+        if (res.isLoading) {
+            return
+        } else {
+            console.log(res.data)
+        }
         
     }
     
