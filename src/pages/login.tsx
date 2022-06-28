@@ -10,7 +10,8 @@ const Login: NextPage = () => {
     const login = () => {
         const res = trpc.useQuery(["login", { username, password }])
         if (res.isLoading) {
-            return
+            console.log("loading");
+            
         } else {
             console.log(res.data)
         }
