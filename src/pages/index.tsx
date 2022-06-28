@@ -7,7 +7,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Navbar />
+      
       {
       cart.length >= 1 ? (
         cart.map(product => (

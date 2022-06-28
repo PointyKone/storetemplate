@@ -23,7 +23,8 @@ const navigation = [
 const dropdown = [
     { name: "Your Profile", href: "/", current: false },
     { name: "Settings", href: "/", current: false },
-    { name: "Sign Out", href: "/", current: false }
+    { name: "Sign Out", href: "/", current: false },
+    { name: "Sign In", href: "/login", current: false }
 ]
 
 const navbarContext = createContext(initialNavbarContext);
