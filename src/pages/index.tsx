@@ -1,14 +1,21 @@
 import type { NextPage } from 'next'
 import { useCart } from '../components/CartContext'
-import Navbar from '../components/Navbar'
+import { trpc } from '../utils/trpc'
 
 const Home: NextPage = () => {
-  const {cart, addToCart, removeFromCart, clearCart} = useCart()
+
 
   return (
     <div>
       
-      {
+    </div>
+  )
+}
+
+export default Home
+
+// const {cart, addToCart, removeFromCart, clearCart} = useCart()
+/* {
       cart.length >= 1 ? (
         cart.map(product => (
           <div key={product.id}>
@@ -22,9 +29,4 @@ const Home: NextPage = () => {
       }
       <button onClick={() => {
         addToCart({ id: 2, name: "Product 1", price: 10, quantity: 1 })
-        }}>Add</button>
-    </div>
-  )
-}
-
-export default Home
+        }}>Add</button> */

@@ -1,12 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { CartProvider } from '../components/CartContext'
-import { NavbarProvider } from '../components/NavbarContext'
-import { AppRouter } from '../backend/router'
-import { withTRPC } from '@trpc/next'
-import Navbar from '../components/Navbar'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { CartProvider } from "../components/CartContext";
+import { NavbarProvider } from "../components/NavbarContext";
+import { AppRouter } from "../server/route/app.router";
+import { withTRPC } from "@trpc/next";
+import { loggerLink } from "@trpc/client/links/loggerLink";
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
+import superjson from "superjson"
 
-function MyApp({ Component, pageProps }: AppProps) {
+import Navbar from "../components/Navbar";
+
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <NavbarProvider>
       <CartProvider>
@@ -14,29 +18,37 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </CartProvider>
     </NavbarProvider>
-  )
+  );
 }
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
     const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : 'http://localhost:3000/api/trpc';
+      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+      : "http://localhost:3000/api/trpc";
+
+    const links = [
+      loggerLink(),
+      httpBatchLink({
+        maxBatchSize: 10,
+        url,
+      }),
+    ];
 
     return {
-      url,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+      links,
+      queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
+      headers() {
+        if (ctx?.req) {
+          return {
+            ...ctx.req.headers,
+            'x-ssr': 1
+          };
+        }
+        return{}
+      },
+      transformer: superjson
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
-  ssr: true,
+  ssr: false,
 })(MyApp);
