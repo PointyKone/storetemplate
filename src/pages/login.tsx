@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { createUserInput } from "../schema/user.schema";
-import { trpc } from "../utils/trpc";
 
 const Register: NextPage = () => {
 	const {handleSubmit, register} = useForm<createUserInput>()

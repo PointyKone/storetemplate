@@ -7,17 +7,19 @@ import { withTRPC } from "@trpc/next";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import superjson from "superjson"
+import { ThemeProvider } from "next-themes";
 
 import Navbar from "../components/Navbar";
+import { Provider } from "../components/Context";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <NavbarProvider>
-      <CartProvider>
+    <ThemeProvider>
+      <Provider>
         <Navbar />
         <Component {...pageProps} />
-      </CartProvider>
-    </NavbarProvider>
+      </Provider>
+    </ThemeProvider>
   );
 }
 

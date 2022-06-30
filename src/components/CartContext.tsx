@@ -1,5 +1,4 @@
-import { NextPageContext } from "next";
-import { createContext, FC, useContext, useMemo, useState } from "react";
+import { createContext, FC, useContext, useState } from "react";
 
 type cartProviderProps = {
     children: React.ReactNode

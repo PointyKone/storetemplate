@@ -5,8 +5,6 @@ type navbarProviderProps = {
 }
 
 export const initialNavbarContext = {
-    pages: [] as typeof navigation,
-    dropdownLinks: [] as typeof dropdown,
     isOpen: false,
     dropdownOpen: false,
     toggle: () => {},
@@ -14,27 +12,12 @@ export const initialNavbarContext = {
     
 }
 
-const navigation = [
-    { name: "Men", href: "/", current: false },
-    { name: "Women", href: "/", current: false },
-    { name: "Kids", href: "/", current: false },
-]
-
-const dropdown = [
-    { name: "Your Profile", href: "/", current: false },
-    { name: "Settings", href: "/", current: false },
-    { name: "Sign Out", href: "/", current: false },
-    { name: "Sign In", href: "/login", current: false }
-]
 
 const navbarContext = createContext(initialNavbarContext);
 
 export const NavbarProvider: FC<navbarProviderProps> = ({ children }) => {
     const [isOpen, setOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false)
-
-    const pages = navigation;
-    const dropdownLinks = dropdown;
 
     const toggle = () => {
         setOpen(!(isOpen));
@@ -45,7 +28,7 @@ export const NavbarProvider: FC<navbarProviderProps> = ({ children }) => {
     }
 
     return (
-        <navbarContext.Provider value={{ pages, dropdownLinks, isOpen, dropdownOpen, toggle, toggleDropdown }}>
+        <navbarContext.Provider value={{ isOpen, dropdownOpen, toggle, toggleDropdown }}>
             {children}
         </navbarContext.Provider>
     );
